@@ -21,7 +21,6 @@ export default function User() {
             <Button label="Agregar usuario" onClick={() => { setSelected(null), setIsEdit(false), setVisible(true) }} />
         </div>
     )
-    const eliminarUser = (user) => { console.log('user delete') }
     const action = (row) => (
         <div className='grid place-content-baseline gap-2'>
             <Button label="Editar" icon="pi pi-pencil" className='p-button-text' onClick={() => {setSelected(row),setIsEdit(true),setVisible(true)}} />
@@ -29,6 +28,7 @@ export default function User() {
         </div>
     )
     const imageBody = (rowData) => { return <img src={rowData.image} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> };
+    const eliminarUser = (id) => { console.log('usuario eliminada') }
     return (
         <div>
             <DataTable value={user} paginator rows={10} header={header}>

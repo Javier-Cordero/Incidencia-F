@@ -18,10 +18,10 @@ export default function Report() {
                 <InputIcon className="pi pi-search" />
                 <InputText type="search" placeholder="Search" className='w-[30%] h-full pl-10' />
             </IconField>
-            <Button label="Reportar" onClick={() => { setSelected(null), setIsEdit(false), setVisible(true) }} className='w-[10%]' />
+            <Button label="Agregar reportar" onClick={() => { setSelected(null), setIsEdit(false), setVisible(true) }} className='w-[10%]' />
         </div>
     )
-    const eliminar = (report) => { console.log('reporte eliminado') }
+    const eliminar = (id) => { console.log('reporte eliminado') }
     const action = (row) => (
         <div className='grid place-content-baseline gap-2'>
             <Button label="Editar" icon="pi pi-pencil" className='p-button-text' onClick={() => {setSelected(row),setIsEdit(true),setVisible(true)}} />
@@ -40,7 +40,7 @@ export default function Report() {
                 <Column body='fecha' header="fecha" ></Column>
                 <Column body={action} header="acciones" />
             </DataTable>
-            <Reporte visible={visible} setVisible={setVisible} user={selected} isEdit={isEdit} />
+            <Reporte visible={visible} setVisible={setVisible} report={selected} isEdit={isEdit} />
         </div>
     )
 }
