@@ -3,10 +3,10 @@ import { AuthContext } from "../context/AuthContext";
 import Layout from "../layout/Layout";
 export default function Home({ children }) {
   const { user } = useContext(AuthContext);
-  const useData = user ? user[0] : null;
+  const useData = user[0] || null;
   const renderRol = () => {
     if (!useData) return <p>No estás autenticado</p>;
-    switch (useData[0].role) {
+    switch (useData?.role) {
       case "administrador":
         return <p>Administrador</p>;
       case "concerje":

@@ -4,15 +4,15 @@ import { useApi } from '../api/useApi'
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { IconField } from 'primereact/iconfield';
-import { useQuery } from '@tanstack/react-query';
 import { InputIcon } from 'primereact/inputicon';
 import { useState } from 'react';
 import Usuario from '../components/Usuario';
 export default function User() {
+    const { user } = useApi()
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState(null)
     const [isEdit, setIsEdit] = useState(null)
-    const { user } = useApi()
+    const [actualizar, setActualizar] = useState(user)
     const header = (
         <div className='flex justify-around w-full h-12'>
             <IconField iconPosition="left" className='w-[90%]'>
@@ -29,7 +29,10 @@ export default function User() {
         </div>
     )
     const imageBody = (rowData) => { return <img src={rowData.image} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> };
-    const eliminarUser = (id) => { console.log('usuario eliminada') }
+    const eliminarUser = (id) => { 
+        console.log('usuario eliminada') 
+        setActualizar(actualizar.filter(item => item.reportId !== id))
+    }
     return (
         <div>
             <DataTable value={user} paginator rows={10} header={header}>
