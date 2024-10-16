@@ -32,7 +32,7 @@ export default function Layout() {
                         command: () => navigate("/detail"),
                     }
                 ];
-            case 'concerje':
+            case 'conserje':
                 return [
                     {
                         label: 'Reportes',
