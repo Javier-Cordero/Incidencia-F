@@ -5,8 +5,8 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { useEffect, useRef, useState } from "react";
 import { useApi } from "../api/useApi";
-export default function Reporte({ visible, setVisible, report, isEdit }) {
-  const { createReport, updateReport } = useApi();
+export default function Reporte({ visible, setVisible, report, isEdit, onReport }) {
+  const { createReport, updateReport, getReport } = useApi();
   const [tipo, setTipo]=useState("")
   const [descripcion, setDescripcion] = useState("");
   const [date, setDate] = useState("");
@@ -19,12 +19,12 @@ export default function Reporte({ visible, setVisible, report, isEdit }) {
         const formatoFecha = new Date(report.fecha).toISOString().split("T")[0]
         setDate(formatoFecha)
       } else{console.log("vacio")}
-      setDate(report.fecha);
     } else {
       setTipo("");
       setDescripcion("");
       setDate("");
     }
+    getReport()
   }, [isEdit, report]);
   const handle = async (e) => {
     e.preventDefault();
@@ -39,7 +39,8 @@ export default function Reporte({ visible, setVisible, report, isEdit }) {
       } else {
         rs = await createReport(reporte);
       }
-
+      setVisible(false);
+      await onReport()
       if (rs && rs.success) {
         toast.current.show({
           severity: "success",
@@ -47,7 +48,6 @@ export default function Reporte({ visible, setVisible, report, isEdit }) {
           detail: isEdit ? "datos actualizados" : "reporte creado",
           life: 3000,
         });
-        setVisible(false);
       }
     } catch (error) {
       let errorMessage = "Intente de nuevo";

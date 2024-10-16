@@ -8,11 +8,15 @@ import { InputIcon } from 'primereact/inputicon';
 import { useState } from 'react';
 import Usuario from '../components/Usuario';
 export default function User() {
-    const { user } = useApi()
+    const { user, getUser, deleteUser } = useApi()
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState(null)
     const [isEdit, setIsEdit] = useState(null)
-    const [actualizar, setActualizar] = useState(user)
+    const handleDelete = async (row) => {
+        await deleteUser(row.userId)
+        await getUser()
+    }
+    useEffect(() => { getUser() }, [])
     const header = (
         <div className='flex justify-around w-full h-12'>
             <IconField iconPosition="left" className='w-[90%]'>
@@ -24,15 +28,11 @@ export default function User() {
     )
     const action = (row) => (
         <div className='grid place-content-baseline gap-2'>
-            <Button label="Editar" icon="pi pi-pencil" className='p-button-text' onClick={() => {setSelected(row),setIsEdit(true),setVisible(true)}} />
-            <Button label="Eliminar" icon="pi pi-trash" className='p-button-text' onClick={() => eliminarUser(row.id)} />
+            <Button label="Editar" icon="pi pi-pencil" className='p-button-text' onClick={() => { setSelected(row), setIsEdit(true), setVisible(true) }} />
+            <Button label="Eliminar" icon="pi pi-trash" className='p-button-text' onClick={() => handleDelete(row)} />
         </div>
     )
     const imageBody = (rowData) => { return <img src={rowData.image} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> };
-    const eliminarUser = (id) => { 
-        console.log('usuario eliminada') 
-        setActualizar(actualizar.filter(item => item.reportId !== id))
-    }
     return (
         <div>
             <DataTable value={user} paginator rows={10} header={header}>
