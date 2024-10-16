@@ -91,7 +91,7 @@ export const useApi = () => {
   };
   const updateDetail = async (id, newDetail) => {
     try {
-      const rs = await axios.put(`${url}/details/${id}`, newDetail);
+      const rs = await axios.patch(`${url}/details/${id}`, newDetail);
       setDetail((prev) => {
         prev.map((detail) => (detail.id === id ? rs.data.data : detail));
       });
@@ -111,7 +111,7 @@ export const useApi = () => {
   };
   const updateUser = async (id, newUser) => {
     try {
-      const rs = await axios.put(`${url}/users/${id}`, newUser);
+      const rs = await axios.patch(`${url}/users/${id}`, newUser);
       setUser((prev) => {
         prev.map((user) => (user.id === id ? rs.data.data : user));
       });

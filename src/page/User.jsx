@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Usuario from '../components/Usuario';
 export default function User() {
     const { user, getUser, deleteUser } = useApi()
@@ -17,6 +17,9 @@ export default function User() {
         await getUser()
     }
     useEffect(() => { getUser() }, [])
+    const handleUser = async () => {
+        await getUser();
+      };
     const header = (
         <div className='flex justify-around w-full h-12'>
             <IconField iconPosition="left" className='w-[90%]'>
@@ -45,7 +48,7 @@ export default function User() {
                 <Column body={imageBody} header="perfil" ></Column>
                 <Column body={action} header="acciones" />
             </DataTable>
-            <Usuario visible={visible} setVisible={setVisible} user={selected} isEdit={isEdit} />
+            <Usuario visible={visible} setVisible={setVisible} user={selected} isEdit={isEdit} onUser={handleUser} />
         </div>
     )
 }
