@@ -11,6 +11,7 @@ export const useApi = () => {
     try {
       const rs = await axios.get(`${url}/details`);
       setDetail(rs.data.data);
+      console.log(rs.data)
     } catch (error) {
       console.error(error.message);
     }
